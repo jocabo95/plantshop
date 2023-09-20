@@ -16,12 +16,45 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { Link, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
+import { loginGoogle, onSignIn } from "../../../firebaseCofig";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
+
+  const [userCredentials, setUserCredentials] = useState({
+    email: "",
+    password: "",
+  });
+
+  let onChange = (e) => {
+    setUserCredentials({ ...userCredentials, [e.target.name]: e.target.value });
+  };
+
+  let onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await onSignIn(userCredentials);
+      if (res.user) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  let googleLogin = async () => {
+    try {
+      let res = await loginGoogle();
+      navigate("/");
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Box
@@ -35,7 +68,7 @@ const Login = () => {
         // backgroundColor: theme.palette.secondary.main,
       }}
     >
-      <form>
+      <form onSubmit={onSubmit}>
         <Grid
           container
           rowSpacing={2}
@@ -43,7 +76,12 @@ const Login = () => {
           justifyContent={"center"}
         >
           <Grid item xs={10} md={12}>
-            <TextField name="email" label="Email" fullWidth />
+            <TextField
+              onChange={onChange}
+              name="email"
+              label="Email"
+              fullWidth
+            />
           </Grid>
           <Grid item xs={10} md={12}>
             <FormControl variant="outlined" fullWidth>
@@ -52,6 +90,7 @@ const Login = () => {
               </InputLabel>
               <OutlinedInput
                 name="password"
+                onChange={onChange}
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
                 endAdornment={
@@ -97,6 +136,7 @@ const Login = () => {
             <Grid item xs={10} md={5}>
               <Tooltip title="ingresa con google">
                 <Button
+                  onClick={googleLogin}
                   variant="contained"
                   startIcon={<GoogleIcon />}
                   type="button"
@@ -126,7 +166,7 @@ const Login = () => {
                 <Button
                   variant="contained"
                   fullWidth
-                  onClick={()=>navigate("/register")}
+                  onClick={() => navigate("/register")}
                   type="button"
                   sx={{
                     color: "white",
