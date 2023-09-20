@@ -1,12 +1,15 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebaseCofig";
+import { CartContext } from "../../context/CartContext";
 
 const ItemDetailContainer = () => {
   const [product, setProduct] = useState({});
   const { id } = useParams();
   const [counter, setCounter] = useState(1)
+
+  const {addToCart} = useContext(CartContext)
 
   useEffect(() => {
     let refCollection = collection(db, "productos");
@@ -32,8 +35,9 @@ const ItemDetailContainer = () => {
     }
   }
 
-  let addToCart =()=>{
-
+  let onAdd =()=>{
+    let productObj = {...product, quantity: counter}
+    addToCart(productObj)
   }
 
   return (
@@ -54,7 +58,7 @@ const ItemDetailContainer = () => {
           <p>{counter}</p>
           <button onClick={suma}>+</button>
         </div>
-        <button onClick={addToCart}>Agregar al carrito</button>
+        <button onClick={onAdd}>Agregar al carrito</button>
       </div>
     </div>
   );
