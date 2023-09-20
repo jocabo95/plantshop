@@ -6,6 +6,7 @@ import { db } from "../../../firebaseCofig";
 const ItemDetailContainer = () => {
   const [product, setProduct] = useState({});
   const { id } = useParams();
+  const [counter, setCounter] = useState(1)
 
   useEffect(() => {
     let refCollection = collection(db, "productos");
@@ -17,7 +18,23 @@ const ItemDetailContainer = () => {
       .catch((err) => console.log("error", err));
   }, [id]);
 
-  console.log(product);
+  let suma = ()=>{
+    if (counter < product.stock){
+      setCounter(counter+1)
+    } else {
+      alert("limit stock")
+    }
+  }
+
+  let resta =()=>{
+    if (counter > 1){
+      setCounter(counter - 1)
+    }
+  }
+
+  let addToCart =()=>{
+
+  }
 
   return (
     <div
@@ -32,6 +49,12 @@ const ItemDetailContainer = () => {
         <h2>{product.title}</h2>
         <h3>{product.category}</h3>
         <h4>{product.unit_price}</h4>
+        <div id="counter-id" style={{display: "flex", flexDirection: "row"}}>
+          <button onClick={resta}>-</button>
+          <p>{counter}</p>
+          <button onClick={suma}>+</button>
+        </div>
+        <button onClick={addToCart}>Agregar al carrito</button>
       </div>
     </div>
   );
