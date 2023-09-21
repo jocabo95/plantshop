@@ -11,7 +11,6 @@ const ItemDetailContainer = () => {
   let {getQuantityById} = useContext(CartContext)
 
   let quantity = getQuantityById(id)
-  console.log("quantity= ", quantity)
   const [counter, setCounter] = useState(quantity)
 
   const {addToCart} = useContext(CartContext)

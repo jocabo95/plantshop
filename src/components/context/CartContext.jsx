@@ -10,8 +10,6 @@ const CartContextComponent = ({children}) => {
 
         let check = cart.some((el)=>{return el.id === newProduct.id})
 
-        console.log("check prod = ", check)
-
         if(check){
             let newCart = cart.map((el)=>{
                 if(el.id === newProduct.id){
@@ -38,10 +36,35 @@ const CartContextComponent = ({children}) => {
 
     }
 
+    let clearCart =()=>{
+        setCart([])
+    }
+
+    let deleteById =(id)=>{
+        let filteredCart = cart.filter((el)=>{
+            return el.id !== id
+        })
+
+        setCart(filteredCart)
+    }
+
+    let getTotalPrice =()=>{
+        const totalPrice = cart.reduce((acc,el)=>{
+            return(
+                acc + (el.unit_price * el.quantity)
+            )
+        }, 0)
+
+        return totalPrice
+    }
+
     let data = {
         cart,
         addToCart,
-        getQuantityById
+        getQuantityById,
+        clearCart,
+        deleteById,
+        getTotalPrice
     }
 
   return (
