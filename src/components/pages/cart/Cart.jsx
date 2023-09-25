@@ -36,6 +36,12 @@ const Cart = () => {
         })}
         <h4>Total: {getTotalPrice()}</h4>
         <button onClick={clearCart}>Limpiar carrito</button>
+        <br></br>
+        <Link to="/checkout">
+          <button>
+            Finalizar compra
+          </button>
+        </Link>
       </div>
     </div>
   );
