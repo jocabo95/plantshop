@@ -41,7 +41,6 @@ export const onSignIn = async ({ email, password }) => {
 //logout
 export const logout = () => {
   signOut(auth);
-  console.log("logout");
 };
 
 //login woth google

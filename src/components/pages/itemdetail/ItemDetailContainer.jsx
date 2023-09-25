@@ -1,12 +1,19 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebaseCofig";
+import { CartContext } from "../../context/CartContext";
 
 const ItemDetailContainer = () => {
   const [product, setProduct] = useState({});
   const { id } = useParams();
-  const [counter, setCounter] = useState(1)
+
+  let {getQuantityById} = useContext(CartContext)
+
+  let quantity = getQuantityById(id)
+  const [counter, setCounter] = useState(quantity)
+
+  const {addToCart} = useContext(CartContext)
 
   useEffect(() => {
     let refCollection = collection(db, "productos");
@@ -32,8 +39,9 @@ const ItemDetailContainer = () => {
     }
   }
 
-  let addToCart =()=>{
-
+  let onAdd =()=>{
+    let productObj = {...product, quantity: counter}
+    addToCart(productObj)
   }
 
   return (
@@ -49,12 +57,14 @@ const ItemDetailContainer = () => {
         <h2>{product.title}</h2>
         <h3>{product.category}</h3>
         <h4>{product.unit_price}</h4>
-        <div id="counter-id" style={{display: "flex", flexDirection: "row"}}>
+        <div id="counter-id" style={{ display: "flex", flexDirection: "row" }}>
           <button onClick={resta}>-</button>
           <p>{counter}</p>
           <button onClick={suma}>+</button>
         </div>
-        <button onClick={addToCart}>Agregar al carrito</button>
+        <Link to="/cart">
+          <button onClick={onAdd}>Agregar al carrito</button>
+        </Link>
       </div>
     </div>
   );
