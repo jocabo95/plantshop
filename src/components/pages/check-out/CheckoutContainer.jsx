@@ -27,7 +27,7 @@ const CheckoutContainer = () => {
 
       try {
         let response = await axios.post(
-          "http://localhost:8080//create_preference",
+          "http://localhost:8080/create_preference",
           {
             items: cartSummary,
             shipment_cost: 20000,
