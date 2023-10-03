@@ -10,7 +10,7 @@ const CheckoutContainer = () => {
     const [preferenceId, setPreferenceId] = useState(null)
     
     //initiate mercadopago with app key
-    initMercadoPago("APP_USR-6cac4dd2-83c7-46e3-99e9-a3339d9be5de", {
+    initMercadoPago(import.meta.env.VITE_PUBLICKEY, {
         locale:"es-CO"
     });
 

@@ -11,12 +11,12 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDxL7VJcZp89SazbP9MmBYEGVXRBXJ90_o",
-  authDomain: "plantshop-5ac3c.firebaseapp.com",
-  projectId: "plantshop-5ac3c",
-  storageBucket: "plantshop-5ac3c.appspot.com",
-  messagingSenderId: "758121555523",
-  appId: "1:758121555523:web:2e87b9f625742135b556f6",
+  apiKey: import.meta.env.VITE_APIKEY,
+  authDomain: import.meta.env.VITE_AUTHDOMAIN,
+  projectId: import.meta.env.VITE_PROJECTID,
+  storageBucket: import.meta.env.VITE_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID,
+  appId: import.meta.env.VITE_APPID,
 };
 
 // Initialize Firebase
