@@ -5,26 +5,27 @@ export const AuthContext = createContext()
 
 const AuthContextComponent = ({children}) => {
 
-    const [logedUser, setLogedUser] = useState({})
-    const [logedStatus, setLogedStatus] = useState(false)
+    const [loggedUser, setLoggedUser] = useState({})
+    const [loggedStatus, setLogedStatus] = useState(false)
 
     // store user who loged in
-    let storeUser =(user)=>{
-        setLogedUser(user)
-        setLogedStatus(true)
+    let userWhoLogged =(user)=>{
+        setLoggedUser(user)
+        setLogedStatus(true)        
     }
     
-    let handleLogout =()=>{
-        setLogedUser({})
+    // clear logged user
+    let logoutContext =()=>{
+        setLoggedUser({})
         setLogedStatus(false)
     }
 
     const data = {
-        logedUser,
-        logedStatus,
-        storeUser,
-        handleLogout
-    }
+      loggedUser,
+      loggedStatus,
+      userWhoLogged,
+      logoutContext,
+    };
 
   return (
     <AuthContext.Provider value={data}>

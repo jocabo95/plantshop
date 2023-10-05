@@ -22,7 +22,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 const Login = () => {
 
-  const { storeUser } = useContext(AuthContext);
+  const { userWhoLogged } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -53,7 +53,7 @@ const Login = () => {
           rol: getRol.data().rol
         }
 
-        storeUser(userData)
+        userWhoLogged(userData);
 
         navigate("/");
       }
