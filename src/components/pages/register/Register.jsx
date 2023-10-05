@@ -13,7 +13,8 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../../firebaseCofig";
+import { db, register } from "../../../firebaseCofig";
+import {doc, setDoc} from "firebase/firestore"
 
 const Register = () => {
   const navigate = useNavigate();
@@ -36,6 +37,15 @@ const Register = () => {
     try {
       let res = await register(userCredentials);
       console.log(res);
+
+      try {
+        if (res.user.uid) {
+          await setDoc(doc(db, "usuarios", res.user.uid), { rol: "user" });
+        }
+      } catch (error) {
+        console.log(error)
+      }
+      
       navigate("/login");
     } catch (error) {
       console.log(error);
