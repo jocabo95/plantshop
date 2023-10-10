@@ -17,8 +17,10 @@ import { db, register } from "../../../firebaseCofig";
 import {doc, setDoc} from "firebase/firestore"
 
 const Register = () => {
+
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
