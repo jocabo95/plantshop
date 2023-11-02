@@ -4,7 +4,7 @@ export const CartContext = createContext()
 
 const CartContextComponent = ({children}) => {
 
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("storedCart")) || [])
 
     let addToCart =(newProduct)=>{
 
@@ -20,8 +20,11 @@ const CartContextComponent = ({children}) => {
                 }
             })
 
+            localStorage.setItem("storedCart", JSON.stringify(newCart))
             setCart(newCart)
         }else{
+            localStorage.setItem("storedCart", JSON.stringify([...cart, newProduct])
+            );
             setCart([...cart, newProduct]);
         }
     }
@@ -37,6 +40,7 @@ const CartContextComponent = ({children}) => {
     }
 
     let clearCart =()=>{
+        localStorage.removeItem("storedCart");
         setCart([])
     }
 
@@ -45,6 +49,7 @@ const CartContextComponent = ({children}) => {
             return el.id !== id
         })
 
+        localStorage.setItem("storedCart", JSON.stringify(filteredCart));
         setCart(filteredCart)
     }
 
