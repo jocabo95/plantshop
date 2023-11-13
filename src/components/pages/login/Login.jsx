@@ -50,6 +50,7 @@ const Login = () => {
 
         let userData = {
           id: res.user.uid,
+          email: res.user.email,
           rol: getRol.data().rol
         }
 
